@@ -45,4 +45,4 @@ If you have any issues what soever please create an issue here at github.
 
 Have fun with SyncMyCal, i hope it helps you as much as it helps me.
 
-[@bigbasti]
+[@bigbasti](https://twitter.com/bigbasti)
