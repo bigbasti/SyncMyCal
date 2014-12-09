@@ -41,6 +41,7 @@
             this.cmdAdd = new System.Windows.Forms.Button();
             this.cmdEdit = new System.Windows.Forms.Button();
             this.cmdRemove = new System.Windows.Forms.Button();
+            this.chkStartOnBoot = new System.Windows.Forms.CheckBox();
             this.mnuSystemTray.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -106,7 +107,7 @@
             // 
             // cmdAdd
             // 
-            this.cmdAdd.Location = new System.Drawing.Point(15, 135);
+            this.cmdAdd.Location = new System.Drawing.Point(15, 160);
             this.cmdAdd.Name = "cmdAdd";
             this.cmdAdd.Size = new System.Drawing.Size(106, 23);
             this.cmdAdd.TabIndex = 3;
@@ -116,7 +117,7 @@
             // 
             // cmdEdit
             // 
-            this.cmdEdit.Location = new System.Drawing.Point(127, 135);
+            this.cmdEdit.Location = new System.Drawing.Point(127, 160);
             this.cmdEdit.Name = "cmdEdit";
             this.cmdEdit.Size = new System.Drawing.Size(106, 23);
             this.cmdEdit.TabIndex = 4;
@@ -126,7 +127,7 @@
             // 
             // cmdRemove
             // 
-            this.cmdRemove.Location = new System.Drawing.Point(239, 135);
+            this.cmdRemove.Location = new System.Drawing.Point(239, 160);
             this.cmdRemove.Name = "cmdRemove";
             this.cmdRemove.Size = new System.Drawing.Size(106, 23);
             this.cmdRemove.TabIndex = 5;
@@ -134,11 +135,23 @@
             this.cmdRemove.UseVisualStyleBackColor = true;
             this.cmdRemove.Click += new System.EventHandler(this.cmdRemove_Click);
             // 
+            // chkStartOnBoot
+            // 
+            this.chkStartOnBoot.AutoSize = true;
+            this.chkStartOnBoot.Location = new System.Drawing.Point(15, 135);
+            this.chkStartOnBoot.Name = "chkStartOnBoot";
+            this.chkStartOnBoot.Size = new System.Drawing.Size(207, 17);
+            this.chkStartOnBoot.TabIndex = 6;
+            this.chkStartOnBoot.Text = "Start SyncMyCal after windows startup";
+            this.chkStartOnBoot.UseVisualStyleBackColor = true;
+            this.chkStartOnBoot.CheckedChanged += new System.EventHandler(this.chkStartOnBoot_CheckedChanged);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(373, 171);
+            this.ClientSize = new System.Drawing.Size(373, 195);
+            this.Controls.Add(this.chkStartOnBoot);
             this.Controls.Add(this.cmdRemove);
             this.Controls.Add(this.cmdEdit);
             this.Controls.Add(this.cmdAdd);
@@ -171,5 +184,6 @@
         private System.Windows.Forms.Button cmdAdd;
         private System.Windows.Forms.Button cmdEdit;
         private System.Windows.Forms.Button cmdRemove;
+        private System.Windows.Forms.CheckBox chkStartOnBoot;
     }
 }

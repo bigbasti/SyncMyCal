@@ -1,6 +1,7 @@
 ﻿using SyncMyCal.Calendars;
 using SyncMyCal.Properties;
 using SyncMyCal.Sync;
+using SyncMyCal.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +26,7 @@ namespace SyncMyCal
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
+            this.chkStartOnBoot.Checked = Settings.Default.StartOnWindowsLogon;
             this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - (this.Width + 10), Screen.PrimaryScreen.WorkingArea.Height - (this.Height + 10));
 
             foreach (SyncSetting setting in syncManager.calendarsToSync)
@@ -170,6 +172,13 @@ namespace SyncMyCal
                 syncTimer.Add(t);
                 t.Start();
             }
+        }
+
+        private void chkStartOnBoot_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.StartOnWindowsLogon = chkStartOnBoot.Checked;
+            RegistryTools.RegisterInStartup(chkStartOnBoot.Checked);
+            Settings.Default.Save();
         }
     }
 }
