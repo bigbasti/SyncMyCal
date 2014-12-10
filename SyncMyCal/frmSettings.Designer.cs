@@ -42,6 +42,7 @@
             this.cmdEdit = new System.Windows.Forms.Button();
             this.cmdRemove = new System.Windows.Forms.Button();
             this.chkStartOnBoot = new System.Windows.Forms.CheckBox();
+            this.chkAlertAfterSync = new System.Windows.Forms.CheckBox();
             this.mnuSystemTray.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -107,7 +108,7 @@
             // 
             // cmdAdd
             // 
-            this.cmdAdd.Location = new System.Drawing.Point(15, 160);
+            this.cmdAdd.Location = new System.Drawing.Point(15, 135);
             this.cmdAdd.Name = "cmdAdd";
             this.cmdAdd.Size = new System.Drawing.Size(106, 23);
             this.cmdAdd.TabIndex = 3;
@@ -117,7 +118,7 @@
             // 
             // cmdEdit
             // 
-            this.cmdEdit.Location = new System.Drawing.Point(127, 160);
+            this.cmdEdit.Location = new System.Drawing.Point(127, 135);
             this.cmdEdit.Name = "cmdEdit";
             this.cmdEdit.Size = new System.Drawing.Size(106, 23);
             this.cmdEdit.TabIndex = 4;
@@ -127,7 +128,7 @@
             // 
             // cmdRemove
             // 
-            this.cmdRemove.Location = new System.Drawing.Point(239, 160);
+            this.cmdRemove.Location = new System.Drawing.Point(239, 135);
             this.cmdRemove.Name = "cmdRemove";
             this.cmdRemove.Size = new System.Drawing.Size(106, 23);
             this.cmdRemove.TabIndex = 5;
@@ -138,7 +139,7 @@
             // chkStartOnBoot
             // 
             this.chkStartOnBoot.AutoSize = true;
-            this.chkStartOnBoot.Location = new System.Drawing.Point(15, 135);
+            this.chkStartOnBoot.Location = new System.Drawing.Point(12, 164);
             this.chkStartOnBoot.Name = "chkStartOnBoot";
             this.chkStartOnBoot.Size = new System.Drawing.Size(207, 17);
             this.chkStartOnBoot.TabIndex = 6;
@@ -146,11 +147,23 @@
             this.chkStartOnBoot.UseVisualStyleBackColor = true;
             this.chkStartOnBoot.CheckedChanged += new System.EventHandler(this.chkStartOnBoot_CheckedChanged);
             // 
+            // chkAlertAfterSync
+            // 
+            this.chkAlertAfterSync.AutoSize = true;
+            this.chkAlertAfterSync.Location = new System.Drawing.Point(12, 187);
+            this.chkAlertAfterSync.Name = "chkAlertAfterSync";
+            this.chkAlertAfterSync.Size = new System.Drawing.Size(187, 17);
+            this.chkAlertAfterSync.TabIndex = 7;
+            this.chkAlertAfterSync.Text = "Show alert bubble after each sync";
+            this.chkAlertAfterSync.UseVisualStyleBackColor = true;
+            this.chkAlertAfterSync.CheckedChanged += new System.EventHandler(this.chkAlertAfterSync_CheckedChanged);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(373, 195);
+            this.ClientSize = new System.Drawing.Size(373, 213);
+            this.Controls.Add(this.chkAlertAfterSync);
             this.Controls.Add(this.chkStartOnBoot);
             this.Controls.Add(this.cmdRemove);
             this.Controls.Add(this.cmdEdit);
@@ -185,5 +198,6 @@
         private System.Windows.Forms.Button cmdEdit;
         private System.Windows.Forms.Button cmdRemove;
         private System.Windows.Forms.CheckBox chkStartOnBoot;
+        private System.Windows.Forms.CheckBox chkAlertAfterSync;
     }
 }

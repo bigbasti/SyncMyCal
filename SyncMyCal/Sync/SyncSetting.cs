@@ -28,5 +28,13 @@ namespace SyncMyCal.Sync
         public int DaysIntoFuture { get; set; }
 
         public int MinutesBetweenSync { get; set; }
+
+        public override string ToString()
+        {
+            return Source.getProviderName() +
+                    " (" + SourceCalendar.DsplayName +
+                    ") -> " + Destination.getProviderName() + " (" +
+                    DestinationCalendar.DsplayName + ")";
+        }
     }
 }

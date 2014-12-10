@@ -100,7 +100,7 @@ namespace SyncMyCal.Sync
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return false;
+                throw ex;
             }
 
             return true;

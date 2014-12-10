@@ -46,5 +46,17 @@ namespace SyncMyCal.Properties {
                 this["StartOnWindowsLogon"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowAlertfAfterSync {
+            get {
+                return ((bool)(this["ShowAlertfAfterSync"]));
+            }
+            set {
+                this["ShowAlertfAfterSync"] = value;
+            }
+        }
     }
 }

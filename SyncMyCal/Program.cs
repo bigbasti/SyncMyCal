@@ -7,6 +7,11 @@ using System.Windows.Forms;
 
 namespace SyncMyCal
 {
+    //TODO: Set icons for the Foms
+    //TODO: Set different icon when sync in progress
+    //TODO: tooltip text shows when the next sync will start
+    //TODO: doubleclick on tray icon should open settings form
+    //TODO: doubleclick on list element in settings form should open properties for the setting
     static class Program
     {
         /// <summary>

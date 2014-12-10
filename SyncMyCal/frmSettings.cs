@@ -27,14 +27,12 @@ namespace SyncMyCal
         private void frmSettings_Load(object sender, EventArgs e)
         {
             this.chkStartOnBoot.Checked = Settings.Default.StartOnWindowsLogon;
+            this.chkAlertAfterSync.Checked = Settings.Default.ShowAlertfAfterSync;
             this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - (this.Width + 10), Screen.PrimaryScreen.WorkingArea.Height - (this.Height + 10));
 
             foreach (SyncSetting setting in syncManager.calendarsToSync)
             {
-                lstSyncSettings.Items.Add(setting.Source.getProviderName() +
-                                                    " (" + setting.SourceCalendar.DsplayName +
-                                                    ") -> " + setting.Destination.getProviderName() + " (" +
-                                                    setting.DestinationCalendar.DsplayName + ")");
+                lstSyncSettings.Items.Add(setting.ToString());
             }
 
 
@@ -81,10 +79,7 @@ namespace SyncMyCal
             {
                 //add only when the user clicked OK
                 syncManager.calendarsToSync.Add(newSetup.newSetting);
-                lstSyncSettings.Items.Add(newSetup.newSetting.Source.getProviderName() + 
-                                                    " (" + newSetup.newSetting.SourceCalendar.DsplayName + 
-                                                    ") -> " + newSetup.newSetting.Destination.getProviderName() + " (" +
-                                                    newSetup.newSetting.DestinationCalendar.DsplayName + ")");
+                lstSyncSettings.Items.Add(newSetup.newSetting.ToString());
                 syncManager.saveSyncSettings();
                 refreshTimers();
             }
@@ -103,10 +98,7 @@ namespace SyncMyCal
 
                 for (var index = 0; index < syncManager.calendarsToSync.Count; index++)
                 {
-                    if (lstSyncSettings.Text.Equals(syncManager.calendarsToSync[index].Source.getProviderName() + 
-                                                " (" + syncManager.calendarsToSync[index].SourceCalendar.DsplayName + 
-                                                ") -> " + syncManager.calendarsToSync[index].Destination.getProviderName() + " (" +
-                                                syncManager.calendarsToSync[index].DestinationCalendar.DsplayName + ")"))
+                    if (lstSyncSettings.Text.Equals(syncManager.calendarsToSync[index].ToString()))
                     {
                         settingToChange = syncManager.calendarsToSync[index];
                         managerIndex = index;
@@ -121,10 +113,7 @@ namespace SyncMyCal
                 {
                     //add only when the user clicked OK
                     syncManager.calendarsToSync[managerIndex] = newSetup.newSetting;
-                    lstSyncSettings.Items[lstSyncSettings.SelectedIndex] = newSetup.newSetting.Source.getProviderName() +
-                                                    " (" + newSetup.newSetting.SourceCalendar.DsplayName +
-                                                    ") -> " + newSetup.newSetting.Destination.getProviderName() + " (" +
-                                                    newSetup.newSetting.DestinationCalendar.DsplayName + ")";
+                    lstSyncSettings.Items[lstSyncSettings.SelectedIndex] = newSetup.newSetting.ToString();
                     syncManager.saveSyncSettings();
                     refreshTimers();
                 }
@@ -138,10 +127,7 @@ namespace SyncMyCal
             {
                 for (var index = 0; index < syncManager.calendarsToSync.Count; index++)
                 {
-                    if (lstSyncSettings.Text.ToString().Equals(syncManager.calendarsToSync[index].Source.getProviderName() +
-                                                " (" + syncManager.calendarsToSync[index].SourceCalendar.DsplayName +
-                                                ") -> " + syncManager.calendarsToSync[index].Destination.getProviderName() + " (" +
-                                                syncManager.calendarsToSync[index].DestinationCalendar.DsplayName + ")"))
+                    if (lstSyncSettings.Text.ToString().Equals(syncManager.calendarsToSync[index].ToString()))
                     {
                         syncManager.calendarsToSync.Remove(syncManager.calendarsToSync[index]);
                         lstSyncSettings.Items.RemoveAt(lstSyncSettings.SelectedIndex);
@@ -165,9 +151,29 @@ namespace SyncMyCal
                 };
                 t.Tick += (sender, e) =>
                 {
-                    bool success = syncManager.syncCalendar(setting);
-                    //just to check if the timer works :)
-                    //this.ntiSystemTray.ShowBalloonTip(3000, "Sync finished", "Just synced changes to " + setting.DestinationCalendar.DsplayName, ToolTipIcon.Info);
+                    bool success = false;
+                    string errorMessage = "krasser fehler!";
+                    try
+                    {
+                        success = syncManager.syncCalendar(setting);
+                    }catch(Exception ex){
+                        errorMessage = ex.Message;
+                    }
+
+                    if (Settings.Default.ShowAlertfAfterSync)
+                    {
+                        if (success)
+                        {
+                            this.ntiSystemTray.ShowBalloonTip(1000, "Sync finished successful", "Just synced changes from " + setting.SourceCalendar.DsplayName + " to " + setting.DestinationCalendar.DsplayName + 
+                                                                    Environment.NewLine + "Next sync in " + setting.MinutesBetweenSync + " minutes", ToolTipIcon.Info);
+                        }
+                        else
+                        {
+                            this.ntiSystemTray.ShowBalloonTip(1000, "Sync failed", "Could not sync " + setting.ToString() + 
+                                                                    Environment.NewLine + "Because: " + errorMessage, ToolTipIcon.Error);
+                        }
+                        
+                    }
                 };
                 syncTimer.Add(t);
                 t.Start();
@@ -178,6 +184,12 @@ namespace SyncMyCal
         {
             Settings.Default.StartOnWindowsLogon = chkStartOnBoot.Checked;
             RegistryTools.RegisterInStartup(chkStartOnBoot.Checked);
+            Settings.Default.Save();
+        }
+
+        private void chkAlertAfterSync_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.ShowAlertfAfterSync = chkAlertAfterSync.Checked;
             Settings.Default.Save();
         }
     }
