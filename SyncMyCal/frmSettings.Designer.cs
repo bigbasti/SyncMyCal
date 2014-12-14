@@ -1,6 +1,6 @@
 ﻿namespace SyncMyCal
 {
-    partial class frmSettings
+    partial class FrmSettings
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
             this.ntiSystemTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.mnuSystemTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.einstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +52,7 @@
             this.ntiSystemTray.Icon = ((System.Drawing.Icon)(resources.GetObject("ntiSystemTray.Icon")));
             this.ntiSystemTray.Text = "SyncMyCal";
             this.ntiSystemTray.Visible = true;
+            this.ntiSystemTray.DoubleClick += new System.EventHandler(this.ntiSystemTray_DoubleClick);
             // 
             // mnuSystemTray
             // 
@@ -65,6 +66,7 @@
             // 
             // einstellungenToolStripMenuItem
             // 
+            this.einstellungenToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
             this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.einstellungenToolStripMenuItem.Text = "&Settings";
@@ -105,6 +107,7 @@
             this.lstSyncSettings.Name = "lstSyncSettings";
             this.lstSyncSettings.Size = new System.Drawing.Size(346, 95);
             this.lstSyncSettings.TabIndex = 2;
+            this.lstSyncSettings.DoubleClick += new System.EventHandler(this.lstSyncSettings_DoubleClick);
             // 
             // cmdAdd
             // 
@@ -158,7 +161,7 @@
             this.chkAlertAfterSync.UseVisualStyleBackColor = true;
             this.chkAlertAfterSync.CheckedChanged += new System.EventHandler(this.chkAlertAfterSync_CheckedChanged);
             // 
-            // frmSettings
+            // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -171,9 +174,10 @@
             this.Controls.Add(this.lstSyncSettings);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmSettings";
+            this.Name = "FrmSettings";
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSettings_FormClosing);
             this.Load += new System.EventHandler(this.frmSettings_Load);

@@ -13,21 +13,21 @@ using System.Windows.Forms;
 
 namespace SyncMyCal
 {
-    public partial class frmSyncSetup : Form
+    public partial class FrmSyncSetup : Form
     {
-        public SyncSetting newSetting { get; set; }
+        public SyncSetting NewSetting { get; set; }
 
-        public frmSyncSetup()
+        public FrmSyncSetup()
         {
             InitializeComponent();
 
-            newSetting = new SyncSetting();
+            NewSetting = new SyncSetting();
         }
 
-        public frmSyncSetup(SyncSetting setting)
+        public FrmSyncSetup(SyncSetting setting)
         {
             InitializeComponent();
-            this.newSetting = setting;
+            this.NewSetting = setting;
 
             //Load settings from provided object
             this.numDaysFuture.Value = setting.DaysIntoFuture;
@@ -88,7 +88,7 @@ namespace SyncMyCal
             {
                 source = new OutlookCalendar();
             }
-            newSetting.Source = source;
+            NewSetting.Source = source;
 
             cboSourceCalendarId.Items.Clear();
             foreach (CalendarId cal in source.getCalendars())
@@ -114,7 +114,7 @@ namespace SyncMyCal
             {
                 destination = new OutlookCalendar();
             }
-            newSetting.Destination = destination;
+            NewSetting.Destination = destination;
 
             cboDestinationCalandarId.Items.Clear();
             foreach (CalendarId cal in destination.getCalendars())
@@ -125,11 +125,11 @@ namespace SyncMyCal
 
         private void cboSourceCalendarId_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (CalendarId id in newSetting.Source.getCalendars())
+            foreach (CalendarId id in NewSetting.Source.getCalendars())
             {
                 if (id.DsplayName.Equals(cboSourceCalendarId.Text))
                 {
-                    newSetting.SourceCalendar = id;
+                    NewSetting.SourceCalendar = id;
                     continue;
                 }
             }
@@ -137,11 +137,11 @@ namespace SyncMyCal
 
         private void cboDestinationCalandarId_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (CalendarId id in newSetting.Destination.getCalendars())
+            foreach (CalendarId id in NewSetting.Destination.getCalendars())
             {
                 if (id.DsplayName.Equals(cboDestinationCalandarId.Text))
                 {
-                    newSetting.DestinationCalendar = id;
+                    NewSetting.DestinationCalendar = id;
                     continue;
                 }
             }
@@ -149,10 +149,10 @@ namespace SyncMyCal
 
         private void cmdOk_Click(object sender, EventArgs e)
         {
-            newSetting.MinutesBetweenSync = Convert.ToInt32(this.numSyncMinutes.Value);
-            newSetting.DaysIntoFuture = Convert.ToInt32(numDaysFuture.Value);
-            newSetting.DaysIntoPast = Convert.ToInt32(numDaysPast.Value);
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            NewSetting.MinutesBetweenSync = Convert.ToInt32(this.numSyncMinutes.Value);
+            NewSetting.DaysIntoFuture = Convert.ToInt32(numDaysFuture.Value);
+            NewSetting.DaysIntoPast = Convert.ToInt32(numDaysPast.Value);
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
     }

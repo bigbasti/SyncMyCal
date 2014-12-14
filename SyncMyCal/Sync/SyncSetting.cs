@@ -31,10 +31,7 @@ namespace SyncMyCal.Sync
 
         public override string ToString()
         {
-            return Source.getProviderName() +
-                    " (" + SourceCalendar.DsplayName +
-                    ") -> " + Destination.getProviderName() + " (" +
-                    DestinationCalendar.DsplayName + ")";
+            return string.Format("{0} ({1}) -> {2} ({3})", Source.getProviderName(), SourceCalendar.DsplayName, Destination.getProviderName(), DestinationCalendar.DsplayName);
         }
     }
 }

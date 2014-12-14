@@ -14,12 +14,12 @@ using System.Windows.Forms;
 
 namespace SyncMyCal
 {
-    public partial class frmSettings : Form
+    public partial class FrmSettings : Form
     {
         private SyncManager syncManager = new SyncManager();
         List<Timer> syncTimer = new List<Timer>();
 
-        public frmSettings()
+        public FrmSettings()
         {
             InitializeComponent();
         }
@@ -72,16 +72,16 @@ namespace SyncMyCal
         private void cmdAdd_Click(object sender, EventArgs e)
         {
             cmdAdd.Text = "Please wait...";
-            frmSyncSetup newSetup = new frmSyncSetup();
+            FrmSyncSetup newSetup = new FrmSyncSetup();
             DialogResult result = newSetup.ShowDialog();
 
             if (result == DialogResult.OK)
             {
                 //add only when the user clicked OK
-                syncManager.calendarsToSync.Add(newSetup.newSetting);
-                lstSyncSettings.Items.Add(newSetup.newSetting.ToString());
+                syncManager.calendarsToSync.Add(newSetup.NewSetting);
+                lstSyncSettings.Items.Add(newSetup.NewSetting.ToString());
                 syncManager.saveSyncSettings();
-                refreshTimers();
+                RefreshTimers();
             }
             cmdAdd.Text = "&Add";
         }
@@ -106,16 +106,16 @@ namespace SyncMyCal
                     }
                 }
 
-                frmSyncSetup newSetup = new frmSyncSetup(settingToChange);
+                FrmSyncSetup newSetup = new FrmSyncSetup(settingToChange);
                 DialogResult result = newSetup.ShowDialog();
 
                 if (result == DialogResult.OK)
                 {
                     //add only when the user clicked OK
-                    syncManager.calendarsToSync[managerIndex] = newSetup.newSetting;
-                    lstSyncSettings.Items[lstSyncSettings.SelectedIndex] = newSetup.newSetting.ToString();
+                    syncManager.calendarsToSync[managerIndex] = newSetup.NewSetting;
+                    lstSyncSettings.Items[lstSyncSettings.SelectedIndex] = newSetup.NewSetting.ToString();
                     syncManager.saveSyncSettings();
-                    refreshTimers();
+                    RefreshTimers();
                 }
             }
             cmdEdit.Text = "&Edit";
@@ -123,23 +123,21 @@ namespace SyncMyCal
 
         private void cmdRemove_Click(object sender, EventArgs e)
         {
-            if (lstSyncSettings.Text.Length > 0)
+            if (lstSyncSettings.Text.Length <= 0) return;
+            for (var index = 0; index < syncManager.calendarsToSync.Count; index++)
             {
-                for (var index = 0; index < syncManager.calendarsToSync.Count; index++)
+                if (lstSyncSettings.Text.ToString().Equals(syncManager.calendarsToSync[index].ToString()))
                 {
-                    if (lstSyncSettings.Text.ToString().Equals(syncManager.calendarsToSync[index].ToString()))
-                    {
-                        syncManager.calendarsToSync.Remove(syncManager.calendarsToSync[index]);
-                        lstSyncSettings.Items.RemoveAt(lstSyncSettings.SelectedIndex);
-                        syncManager.saveSyncSettings();
-                        refreshTimers();
-                        break;
-                    }
+                    syncManager.calendarsToSync.Remove(syncManager.calendarsToSync[index]);
+                    lstSyncSettings.Items.RemoveAt(lstSyncSettings.SelectedIndex);
+                    syncManager.saveSyncSettings();
+                    RefreshTimers();
+                    break;
                 }
             }
         }
 
-        private void refreshTimers()
+        private void RefreshTimers()
         {
             syncTimer = new List<Timer>();
             foreach (SyncSetting setting in syncManager.calendarsToSync)
@@ -191,6 +189,16 @@ namespace SyncMyCal
         {
             Settings.Default.ShowAlertfAfterSync = chkAlertAfterSync.Checked;
             Settings.Default.Save();
+        }
+
+        private void lstSyncSettings_DoubleClick(object sender, EventArgs e)
+        {
+            cmdEdit_Click(this, e);
+        }
+
+        private void ntiSystemTray_DoubleClick(object sender, EventArgs e)
+        {
+            einstellungenToolStripMenuItem_Click(this, e);
         }
     }
 }

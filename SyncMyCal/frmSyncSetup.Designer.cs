@@ -1,6 +1,6 @@
 ﻿namespace SyncMyCal
 {
-    partial class frmSyncSetup
+    partial class FrmSyncSetup
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSyncSetup));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.numSyncMinutes = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
@@ -36,6 +37,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboDestinationCalendar = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.cmdConnectDestination = new System.Windows.Forms.Button();
             this.cboDestinationCalandarId = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,13 +46,11 @@
             this.cmdOk = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cboSourceCalendar = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.cmdConnectSource = new System.Windows.Forms.Button();
             this.cboSourceCalendarId = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.cboSourceCalendar = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cboDestinationCalendar = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSyncMinutes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDaysFuture)).BeginInit();
@@ -150,6 +151,27 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Destination calendar";
             // 
+            // cboDestinationCalendar
+            // 
+            this.cboDestinationCalendar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDestinationCalendar.Enabled = false;
+            this.cboDestinationCalendar.FormattingEnabled = true;
+            this.cboDestinationCalendar.Items.AddRange(new object[] {
+            "Google"});
+            this.cboDestinationCalendar.Location = new System.Drawing.Point(146, 19);
+            this.cboDestinationCalendar.Name = "cboDestinationCalendar";
+            this.cboDestinationCalendar.Size = new System.Drawing.Size(192, 21);
+            this.cboDestinationCalendar.TabIndex = 8;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 22);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(122, 13);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "Select calendar provider";
+            // 
             // cmdConnectDestination
             // 
             this.cmdConnectDestination.Location = new System.Drawing.Point(146, 72);
@@ -223,6 +245,27 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Source calendar";
             // 
+            // cboSourceCalendar
+            // 
+            this.cboSourceCalendar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSourceCalendar.Enabled = false;
+            this.cboSourceCalendar.FormattingEnabled = true;
+            this.cboSourceCalendar.Items.AddRange(new object[] {
+            "Outlook"});
+            this.cboSourceCalendar.Location = new System.Drawing.Point(147, 13);
+            this.cboSourceCalendar.Name = "cboSourceCalendar";
+            this.cboSourceCalendar.Size = new System.Drawing.Size(192, 21);
+            this.cboSourceCalendar.TabIndex = 6;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 16);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(122, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Select calendar provider";
+            // 
             // cmdConnectSource
             // 
             this.cmdConnectSource.Location = new System.Drawing.Point(147, 65);
@@ -252,48 +295,6 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Select calendar to sync";
             // 
-            // cboSourceCalendar
-            // 
-            this.cboSourceCalendar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSourceCalendar.Enabled = false;
-            this.cboSourceCalendar.FormattingEnabled = true;
-            this.cboSourceCalendar.Items.AddRange(new object[] {
-            "Outlook"});
-            this.cboSourceCalendar.Location = new System.Drawing.Point(147, 13);
-            this.cboSourceCalendar.Name = "cboSourceCalendar";
-            this.cboSourceCalendar.Size = new System.Drawing.Size(192, 21);
-            this.cboSourceCalendar.TabIndex = 6;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 16);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(122, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Select calendar provider";
-            // 
-            // cboDestinationCalendar
-            // 
-            this.cboDestinationCalendar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboDestinationCalendar.Enabled = false;
-            this.cboDestinationCalendar.FormattingEnabled = true;
-            this.cboDestinationCalendar.Items.AddRange(new object[] {
-            "Google"});
-            this.cboDestinationCalendar.Location = new System.Drawing.Point(146, 19);
-            this.cboDestinationCalendar.Name = "cboDestinationCalendar";
-            this.cboDestinationCalendar.Size = new System.Drawing.Size(192, 21);
-            this.cboDestinationCalendar.TabIndex = 8;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 22);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(122, 13);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Select calendar provider";
-            // 
             // frmSyncSetup
             // 
             this.AcceptButton = this.cmdOk;
@@ -308,9 +309,10 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmSyncSetup";
+            this.Name = "FrmSyncSetup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Setup Sync";
             this.Load += new System.EventHandler(this.frmSyncSetup_Load);
