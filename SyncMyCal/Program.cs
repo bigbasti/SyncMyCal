@@ -8,7 +8,6 @@ using System.Windows.Forms;
 namespace SyncMyCal
 {
     //TODO: Set different icon when sync in progress
-    //TODO: tooltip text shows when the next sync will start
     static class Program
     {
         /// <summary>

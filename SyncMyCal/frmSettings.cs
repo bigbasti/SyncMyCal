@@ -16,6 +16,7 @@ namespace SyncMyCal
 {
     public partial class FrmSettings : Form
     {
+        private DateTime nextSync = DateTime.Now;
         private SyncManager syncManager = new SyncManager();
         List<Timer> syncTimer = new List<Timer>();
 
@@ -33,9 +34,9 @@ namespace SyncMyCal
             foreach (SyncSetting setting in syncManager.calendarsToSync)
             {
                 lstSyncSettings.Items.Add(setting.ToString());
+                nextSync = DateTime.Now.AddMinutes(setting.MinutesBetweenSync);
+                this.ntiSystemTray.Text = string.Format("SyncMyCal - Next sync is in {0} minutes", (nextSync - DateTime.Now).Minutes);
             }
-
-
         }
 
         private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
@@ -171,6 +172,11 @@ namespace SyncMyCal
                                                                     Environment.NewLine + "Because: " + errorMessage, ToolTipIcon.Error);
                         }
                         
+                    }
+                    if (nextSync.AddMinutes(setting.MinutesBetweenSync) < DateTime.Now)
+                    {
+                        nextSync = DateTime.Now.AddMinutes(setting.MinutesBetweenSync);
+                        this.ntiSystemTray.Text = string.Format("Next sync is in {0} minutes", (nextSync - DateTime.Now).Minutes);
                     }
                 };
                 syncTimer.Add(t);
