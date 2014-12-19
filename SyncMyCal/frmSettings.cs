@@ -50,10 +50,9 @@ namespace SyncMyCal
             this.Show();
         }
 
-
-
         private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.ntiSystemTray.Dispose();
             Environment.Exit(0);
         }
 
