@@ -78,10 +78,13 @@ namespace SyncMyCal
             if (result == DialogResult.OK)
             {
                 //add only when the user clicked OK
-                syncManager.calendarsToSync.Add(newSetup.NewSetting);
-                lstSyncSettings.Items.Add(newSetup.NewSetting.ToString());
-                syncManager.saveSyncSettings();
-                RefreshTimers();
+                if (newSetup.NewSetting.ToString() != null)
+                {
+                    syncManager.calendarsToSync.Add(newSetup.NewSetting);
+                    lstSyncSettings.Items.Add(newSetup.NewSetting.ToString());
+                    syncManager.saveSyncSettings();
+                    RefreshTimers();
+                }
             }
             cmdAdd.Text = "&Add";
         }

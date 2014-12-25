@@ -46,16 +46,24 @@ namespace SyncMyCal.Calendars
 
         public List<CalendarId> getCalendars()
         {
-            return new List<CalendarId>()
+            if (calendarConnection != null)
             {
-                new CalendarId()
+                return new List<CalendarId>()
                 {
-                    Provider = "outlook", 
-                    DsplayName = this.calendarConnection.Name, 
-                    InternalId = this.calendarConnection.EntryID, 
-                    Description=""
-                }
-            };
+                    new CalendarId()
+                    {
+                        Provider = "outlook",
+                        DsplayName = calendarConnection.Name,
+                        InternalId = calendarConnection.EntryID,
+                        Description = ""
+                    }
+                };
+            }
+            else
+            {
+                //do not return an emty list to indicate there was a problem connecting to the calendar
+                return null;
+            }
         }
 
         public void setActiveCalendar(CalendarId calendar)

@@ -91,6 +91,15 @@ namespace SyncMyCal
             NewSetting.Source = source;
 
             cboSourceCalendarId.Items.Clear();
+            if (source == null || source.getCalendars() == null)
+            {
+                MessageBox.Show(this, "There was an error while connecting to the calendar: Please make sure " + Environment.NewLine + 
+                                        "  you enter correct data while logging in" + Environment.NewLine + 
+                                        "  you have a working internet connection" + Environment.NewLine + 
+                                        "  you have a calendar set up for your account (in case of outlook)",
+                    "Could not connect to calendar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             foreach (CalendarId cal in source.getCalendars())
             {
                 cboSourceCalendarId.Items.Add(cal.DsplayName);
