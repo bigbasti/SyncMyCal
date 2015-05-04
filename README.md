@@ -29,8 +29,6 @@ Install
 Since this is a very basic tool you don't need any installation, just copy the .exe
 to some place on your HDD and run it. 
 
-You might want to add a link to the autorun folder of windows if you want SyncMyCal to be started
-whenever Windows boots. (This will come es a setting in the app very soon)
 
 Use
 ---
