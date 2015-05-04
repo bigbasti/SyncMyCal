@@ -1,4 +1,5 @@
-﻿using Google.Apis.Calendar.v3.Data;
+﻿using System.Diagnostics;
+using Google.Apis.Calendar.v3.Data;
 using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
@@ -74,36 +75,51 @@ namespace SyncMyCal.Data
         /// <param name="outlookCalendarEvent"></param>
         public CalendarEntry(AppointmentItem outlookCalendarEvent)
         {
-            this.Id = outlookCalendarEvent.EntryID;
-            this.Start = new DateTime();
-            this.End = new DateTime();
-
-            if (outlookCalendarEvent.AllDayEvent)
+            try
             {
-                this.AllDay = true;
-                this.Start = outlookCalendarEvent.Start.Date;
-                this.End = outlookCalendarEvent.End.Date;
+                this.Id = outlookCalendarEvent.EntryID;
+                this.Start = new DateTime();
+                this.End = new DateTime();
+
+                if (outlookCalendarEvent.AllDayEvent)
+                {
+                    this.AllDay = true;
+                    this.Start = outlookCalendarEvent.Start.Date;
+                    this.End = outlookCalendarEvent.End.Date;
+                }
+                else
+                {
+                    this.AllDay = false;
+                    this.Start = outlookCalendarEvent.Start;
+                    this.End = outlookCalendarEvent.End;
+                }
+                this.Subject = outlookCalendarEvent.Subject;
+                this.Description = outlookCalendarEvent.Body;
+                this.Location = outlookCalendarEvent.Location;
+
+
+                //Erinnerung setzen
+                this.Reminder = outlookCalendarEvent.ReminderSet;
+                this.RemainterMinutesBefore = outlookCalendarEvent.ReminderMinutesBeforeStart;
+
+                //Teilnehmer
+                this.Attendees = new List<CalendarAttendee>();
+                foreach (Recipient r in outlookCalendarEvent.Recipients)
+                {
+                    this.Attendees.Add(new CalendarAttendee(r));
+                }
             }
-            else
+            catch (System.Exception ex)
             {
-                this.AllDay = false;
-                this.Start = outlookCalendarEvent.Start;
-                this.End = outlookCalendarEvent.End;
-            }
-            this.Subject = outlookCalendarEvent.Subject;
-            this.Description = outlookCalendarEvent.Body;
-            this.Location = outlookCalendarEvent.Location;
+                //map me if you can
+                //In some cases outlook fails to map properties (e.g. a attendee). 
+                //The program will continue to sync events, even if it can't sync it correctly. 
+                //It is better to have a broken event, than non events at all.
 
+                Debug.WriteLine("Failed to read a event.", ex, this);
 
-            //Erinnerung setzen
-            this.Reminder = outlookCalendarEvent.ReminderSet;
-            this.RemainterMinutesBefore = outlookCalendarEvent.ReminderMinutesBeforeStart;
-
-            //Teilnehmer
-            this.Attendees = new List<CalendarAttendee>();
-            foreach (Recipient r in outlookCalendarEvent.Recipients) {
-                this.Attendees.Add(new CalendarAttendee(r));
-            }
+                this.Subject += "[Sync Error]";
+            }  
         }
 
         /// <summary>
