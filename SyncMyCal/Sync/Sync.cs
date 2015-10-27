@@ -14,45 +14,45 @@ namespace SyncMyCal.Sync
     /// </summary>
     class Sync
     {
-        ICalendar source;
-        ICalendar destination;
+        ICalendar _source;
+        ICalendar _destination;
 
-        DateTime timeFrom;
-        DateTime timeTo;
+        DateTime _timeFrom;
+        DateTime _timeTo;
 
         public Sync()
         {
 
         }
 
-        public Sync from(ICalendar source)
+        public Sync From(ICalendar source)
         {
-            this.source = source;
+            _source = source;
             return this;
         }
 
-        public Sync to(ICalendar destination)
+        public Sync To(ICalendar destination)
         {
-            this.destination = destination;
+            _destination = destination;
             return this;
         }
 
-        public Sync inTimeRangeFrom(DateTime from)
+        public Sync InTimeRangeFrom(DateTime from)
         {
-            this.timeFrom = from;
+            _timeFrom = from;
             return this;
         }
 
-        public Sync to(DateTime to)
+        public Sync To(DateTime to)
         {
-            this.timeTo = to;
+            _timeTo = to;
             return this;
         }
 
         //TODO: Async machen
-        public bool beginSync()
+        public bool BeginSync()
         {
-            if (this.source == null || this.destination == null || this.timeFrom == null || this.timeTo == null)
+            if (_source == null || _destination == null || _timeFrom == null || _timeTo == null)
             {
                 throw new InvalidOperationException("Please provide the timespan and source and destination calendars befor starting sync");
             }
@@ -60,10 +60,10 @@ namespace SyncMyCal.Sync
             try
             {
                 //Get Entries from source
-                var sourceEntries = this.source.getCalendarEntriesInRange(this.timeFrom, this.timeTo);
+                var sourceEntries = _source.GetCalendarEntriesInRange(_timeFrom, _timeTo);
 
                 //Get the entries from destination
-                var destinationEntries = this.destination.getCalendarEntriesInRange(this.timeFrom, this.timeTo);
+                var destinationEntries = _destination.GetCalendarEntriesInRange(_timeFrom, _timeTo);
 
                 //Identify entries which need to be created at destination
                 var destinationEntriesToBeCreated = IdentifyDestinationEntriesToBeCreated(sourceEntries, destinationEntries);
@@ -76,7 +76,7 @@ namespace SyncMyCal.Sync
                     Console.WriteLine("Lösche " + destinationEntriesToBeDeleted.Count + " Google Calender Einträge...");
                     foreach (CalendarEntry entry in destinationEntriesToBeDeleted)
                     {
-                        destination.deleteCalendarEntry(entry);
+                        _destination.DeleteCalendarEntry(entry);
                     }
                     Console.WriteLine("Löschen fertig.");
                     Console.WriteLine("--------------------------------------------------");
@@ -86,7 +86,7 @@ namespace SyncMyCal.Sync
                 {
                     foreach (CalendarEntry entry in destinationEntriesToBeCreated)
                     {
-                        destination.addNewCalendarEntry(entry);
+                        _destination.AddNewCalendarEntry(entry);
                     }
                     Console.WriteLine("--------------------------------------------------");
                     Console.WriteLine("Alle Einträge erfolgreich angelegt!");
@@ -114,7 +114,7 @@ namespace SyncMyCal.Sync
                 bool found = false;
                 foreach (CalendarEntry e in source)
                 {
-                    if (g.generateSignature() == e.generateSignature()) found = true;
+                    if (g.GenerateSignature() == e.GenerateSignature()) found = true;
                 }
                 if (!found) result.Add(g);
             }
@@ -129,7 +129,7 @@ namespace SyncMyCal.Sync
                 bool found = false;
                 foreach (CalendarEntry g in destination)
                 {
-                    if (g.generateSignature() == o.generateSignature()) found = true;
+                    if (g.GenerateSignature() == o.GenerateSignature()) found = true;
                 }
                 if (!found) result.Add(o);
             }

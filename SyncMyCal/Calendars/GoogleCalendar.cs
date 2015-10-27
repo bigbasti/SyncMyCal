@@ -19,15 +19,15 @@ namespace SyncMyCal.Calendars
 
         public GoogleCalendar()
         {
-            connectCalendar();
+            ConnectCalendar();
         }
 
-        public string getProviderName()
+        public string GetProviderName()
         {
             return "Google";
         }
 
-        public bool connectCalendar()
+        public bool ConnectCalendar()
         {
             ClientSecrets secrets = new ClientSecrets 
             { 
@@ -63,7 +63,7 @@ namespace SyncMyCal.Calendars
             return true;
         }
 
-        public List<CalendarId> getCalendars()
+        public List<CalendarId> GetCalendars()
         {
             var availableCalendars = new List<CalendarId>();
 
@@ -89,12 +89,12 @@ namespace SyncMyCal.Calendars
             return availableCalendars;
         }
 
-        public void setActiveCalendar(CalendarId calendar)
+        public void SetActiveCalendar(CalendarId calendar)
         {
             this.activeCalendar = calendar;
         }
 
-        public List<CalendarEntry> getCalendarEntriesInRange(DateTime from, DateTime to)
+        public List<CalendarEntry> GetCalendarEntriesInRange(DateTime from, DateTime to)
         {
             var eventsInRange = new List<CalendarEntry>();
             Events request = null;
@@ -128,7 +128,7 @@ namespace SyncMyCal.Calendars
             return eventsInRange;
         }
 
-        public bool addNewCalendarEntry(CalendarEntry newEntry)
+        public bool AddNewCalendarEntry(CalendarEntry newEntry)
         {
             if (this.calendarConnection == null || this.activeCalendar == null)
             {
@@ -137,7 +137,7 @@ namespace SyncMyCal.Calendars
 
             try
             {
-                calendarConnection.Events.Insert(newEntry.toGoogleCalendarEvent() , this.activeCalendar.InternalId).Execute();
+                calendarConnection.Events.Insert(newEntry.ToGoogleCalendarEvent() , this.activeCalendar.InternalId).Execute();
             }
             catch (Exception ex)
             {
@@ -147,7 +147,7 @@ namespace SyncMyCal.Calendars
             return true;
         }
 
-        public bool deleteCalendarEntry(CalendarEntry entry)
+        public bool DeleteCalendarEntry(CalendarEntry entry)
         {
             if (this.calendarConnection == null || this.activeCalendar == null)
             {

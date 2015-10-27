@@ -13,26 +13,26 @@ namespace SyncMyCal.Calendars
         /// Connects to the Calendar Provider. Needs to be called before any data can be retrieved
         /// </summary>
         /// <returns>True when the connection could be established successfuly</returns>
-        bool connectCalendar();
+        bool ConnectCalendar();
 
         /// <summary>
         /// Returns the name of the Calendar provider
         /// </summary>
         /// <returns></returns>
-        string getProviderName();
+        string GetProviderName();
 
         /// <summary>
         /// Returns a list of all calendars available for the user
         /// </summary>
         /// <returns></returns>
-        List<CalendarId> getCalendars();
+        List<CalendarId> GetCalendars();
 
         /// <summary>
         /// Sets the calendar this instance should use.
         /// (Sometimes a user can have several calendars linked to one account)
         /// </summary>
         /// <param name="calendar"></param>
-        void setActiveCalendar(CalendarId calendar);
+        void SetActiveCalendar(CalendarId calendar);
 
         /// <summary>
         /// Returns all calendar events in a given timespan
@@ -40,20 +40,20 @@ namespace SyncMyCal.Calendars
         /// <param name="from">The DateTime of the earliest calendar event</param>
         /// <param name="to">The DateTime of the last calendar event</param>
         /// <returns>List of all matching CalendarEntries</returns>
-        List<CalendarEntry> getCalendarEntriesInRange(DateTime from, DateTime to);
+        List<CalendarEntry> GetCalendarEntriesInRange(DateTime from, DateTime to);
 
         /// <summary>
         /// Adds a new event to the calendar
         /// </summary>
         /// <param name="newEntry">Entry to e created</param>
         /// <returns>True when there were no errors while saving the event to the calendar</returns>
-        bool addNewCalendarEntry(CalendarEntry newEntry);
+        bool AddNewCalendarEntry(CalendarEntry newEntry);
 
         /// <summary>
         /// Removes a calendar event from the calendar
         /// </summary>
         /// <param name="entry">Entry to be deleted</param>
         /// <returns>True when there were no errors while deleting the entry</returns>
-        bool deleteCalendarEntry(CalendarEntry entry);
+        bool DeleteCalendarEntry(CalendarEntry entry);
     }
 }

@@ -33,8 +33,8 @@ namespace SyncMyCal.Sync
         {
             if (Source != null && SourceCalendar != null && Destination != null && DestinationCalendar != null)
             {
-                return string.Format("{0} ({1}) -> {2} ({3})", Source.getProviderName(), SourceCalendar.DsplayName,
-                    Destination.getProviderName(), DestinationCalendar.DsplayName);
+                return string.Format("{0} ({1}) -> {2} ({3})", Source.GetProviderName(), SourceCalendar.DsplayName,
+                    Destination.GetProviderName(), DestinationCalendar.DsplayName);
             }
             return null;
         }

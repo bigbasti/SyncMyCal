@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SyncMyCal.Tools
 {
-    class RegistryTools
+    public class RegistryTools
     {
         public static void RegisterInStartup(bool autostart)
         {

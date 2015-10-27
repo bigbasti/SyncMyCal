@@ -37,35 +37,35 @@ namespace SyncMyCal.Data
         /// <param name="googleCalendarEvent"></param>
         public CalendarEntry(Event googleCalendarEvent)
         {
-            this.Id = googleCalendarEvent.Id;
+            Id = googleCalendarEvent.Id;
 
             if (googleCalendarEvent.Start.Date != null && googleCalendarEvent.End.Date != null)
             {
                 var startDate = googleCalendarEvent.Start.Date.Split('-');
                 var endDate = googleCalendarEvent.End.Date.Split('-');
-                this.AllDay = true;
-                this.Start = new DateTime(Convert.ToInt32(startDate[0]), Convert.ToInt32(startDate[1]), Convert.ToInt32(startDate[2]));
-                this.End = new DateTime(Convert.ToInt32(endDate[0]), Convert.ToInt32(endDate[1]), Convert.ToInt32(endDate[2]));
+                AllDay = true;
+                Start = new DateTime(Convert.ToInt32(startDate[0]), Convert.ToInt32(startDate[1]), Convert.ToInt32(startDate[2]));
+                End = new DateTime(Convert.ToInt32(endDate[0]), Convert.ToInt32(endDate[1]), Convert.ToInt32(endDate[2]));
             }
             else
             {
-                this.AllDay = false;
-                this.Start = googleCalendarEvent.Start.DateTime.GetValueOrDefault();
-                this.End = googleCalendarEvent.End.DateTime.GetValueOrDefault();
+                AllDay = false;
+                Start = googleCalendarEvent.Start.DateTime.GetValueOrDefault();
+                End = googleCalendarEvent.End.DateTime.GetValueOrDefault();
             }
 
-            this.Subject = googleCalendarEvent.Summary;
-            this.Description = googleCalendarEvent.Description;
-            this.Location = googleCalendarEvent.Location;
+            Subject = googleCalendarEvent.Summary;
+            Description = googleCalendarEvent.Description;
+            Location = googleCalendarEvent.Location;
 
             //TODO: Als Liste implementieren, so dass unbegrenzt viele Reminder möglich sind
-            this.Reminder = googleCalendarEvent.Reminders.Overrides.Count > 0;
-            this.RemainterMinutesBefore = googleCalendarEvent.Reminders.Overrides[0].Minutes.Value;
+            Reminder = googleCalendarEvent.Reminders.Overrides.Count > 0;
+            RemainterMinutesBefore = googleCalendarEvent.Reminders.Overrides[0].Minutes.Value;
 
-            this.Attendees = new List<CalendarAttendee>();
+            Attendees = new List<CalendarAttendee>();
             foreach (EventAttendee a in googleCalendarEvent.Attendees)
             {
-                this.Attendees.Add(new CalendarAttendee(a));
+                Attendees.Add(new CalendarAttendee(a));
             }
         }
 
@@ -77,36 +77,36 @@ namespace SyncMyCal.Data
         {
             try
             {
-                this.Id = outlookCalendarEvent.EntryID;
-                this.Start = new DateTime();
-                this.End = new DateTime();
+                Id = outlookCalendarEvent.EntryID;
+                Start = new DateTime();
+                End = new DateTime();
 
                 if (outlookCalendarEvent.AllDayEvent)
                 {
-                    this.AllDay = true;
-                    this.Start = outlookCalendarEvent.Start.Date;
-                    this.End = outlookCalendarEvent.End.Date;
+                    AllDay = true;
+                    Start = outlookCalendarEvent.Start.Date;
+                    End = outlookCalendarEvent.End.Date;
                 }
                 else
                 {
-                    this.AllDay = false;
-                    this.Start = outlookCalendarEvent.Start;
-                    this.End = outlookCalendarEvent.End;
+                    AllDay = false;
+                    Start = outlookCalendarEvent.Start;
+                    End = outlookCalendarEvent.End;
                 }
-                this.Subject = outlookCalendarEvent.Subject;
-                this.Description = outlookCalendarEvent.Body;
-                this.Location = outlookCalendarEvent.Location;
+                Subject = outlookCalendarEvent.Subject;
+                Description = outlookCalendarEvent.Body;
+                Location = outlookCalendarEvent.Location;
 
 
                 //Erinnerung setzen
-                this.Reminder = outlookCalendarEvent.ReminderSet;
-                this.RemainterMinutesBefore = outlookCalendarEvent.ReminderMinutesBeforeStart;
+                Reminder = outlookCalendarEvent.ReminderSet;
+                RemainterMinutesBefore = outlookCalendarEvent.ReminderMinutesBeforeStart;
 
                 //Teilnehmer
-                this.Attendees = new List<CalendarAttendee>();
+                Attendees = new List<CalendarAttendee>();
                 foreach (Recipient r in outlookCalendarEvent.Recipients)
                 {
-                    this.Attendees.Add(new CalendarAttendee(r));
+                    Attendees.Add(new CalendarAttendee(r));
                 }
             }
             catch (System.Exception ex)
@@ -118,7 +118,7 @@ namespace SyncMyCal.Data
 
                 Debug.WriteLine("Failed to read a event.", ex, this);
 
-                this.Subject += "[Sync Error]";
+                Subject += "[Sync Error]";
             }  
         }
 
@@ -126,26 +126,26 @@ namespace SyncMyCal.Data
         /// Creates a GoogleCalendarEvent from internal Data
         /// </summary>
         /// <returns></returns>
-        public Event toGoogleCalendarEvent()
+        public Event ToGoogleCalendarEvent()
         {
             Event googleCalendarEvent = new Event();
 
             googleCalendarEvent.Start = new EventDateTime();
             googleCalendarEvent.End = new EventDateTime();
 
-            if (this.AllDay)
+            if (AllDay)
             {
-                googleCalendarEvent.Start.Date = this.Start.ToString("yyyy-MM-dd");
-                googleCalendarEvent.End.Date = this.End.ToString("yyyy-MM-dd");
+                googleCalendarEvent.Start.Date = Start.ToString("yyyy-MM-dd");
+                googleCalendarEvent.End.Date = End.ToString("yyyy-MM-dd");
             }
             else
             {
-                googleCalendarEvent.Start.DateTime = this.Start;
-                googleCalendarEvent.End.DateTime = this.End;
+                googleCalendarEvent.Start.DateTime = Start;
+                googleCalendarEvent.End.DateTime = End;
             }
-            googleCalendarEvent.Summary = this.Subject;
-            googleCalendarEvent.Description = this.Description;
-            googleCalendarEvent.Location = this.Location;
+            googleCalendarEvent.Summary = Subject;
+            googleCalendarEvent.Description = Description;
+            googleCalendarEvent.Location = Location;
 
 
             //Erinnerung setzen
@@ -153,12 +153,12 @@ namespace SyncMyCal.Data
             googleCalendarEvent.Reminders.UseDefault = false;
             EventReminder reminder = new EventReminder();
             reminder.Method = "popup";
-            reminder.Minutes = this.RemainterMinutesBefore;
+            reminder.Minutes = RemainterMinutesBefore;
             googleCalendarEvent.Reminders.Overrides = new List<EventReminder>();
             googleCalendarEvent.Reminders.Overrides.Add(reminder);
 
             //Teilnehmer
-            googleCalendarEvent.Attendees = this.Attendees.Select(att => att.toGoogleAttendee()).ToList();
+            googleCalendarEvent.Attendees = Attendees.Select(att => att.ToGoogleAttendee()).ToList();
 
             return googleCalendarEvent;
         }
@@ -167,7 +167,7 @@ namespace SyncMyCal.Data
         /// Creates an OutlookClencarEvent from internal Data
         /// </summary>
         /// <returns></returns>
-        public AppointmentItem toOutlookCalendarEvent()
+        public AppointmentItem ToOutlookCalendarEvent()
         {
             return null;
         }
@@ -177,10 +177,10 @@ namespace SyncMyCal.Data
         /// start time, end time, subject and the location of the event
         /// </summary>
         /// <returns></returns>
-        public string generateSignature()
+        public string GenerateSignature()
         {
             //REFACTOR: in isEqualTo(CalendarEntry) ändern
-            return (this.Start + ";" + this.End + ";" + this.Subject + ";" + this.Location).Trim();
+            return (Start + ";" + End + ";" + Subject + ";" + Location).Trim();
         }
     }
 }

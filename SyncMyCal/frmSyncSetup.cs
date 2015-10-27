@@ -34,7 +34,7 @@ namespace SyncMyCal
             this.numDaysPast.Value = setting.DaysIntoPast;
             this.numSyncMinutes.Value = setting.MinutesBetweenSync;
 
-            foreach (CalendarId id in setting.Source.getCalendars())
+            foreach (CalendarId id in setting.Source.GetCalendars())
             {
                 this.cboSourceCalendarId.Items.Add(id.DsplayName);
             }
@@ -47,7 +47,7 @@ namespace SyncMyCal
                 }
             }
 
-            foreach (CalendarId id in setting.Destination.getCalendars())
+            foreach (CalendarId id in setting.Destination.GetCalendars())
             {
                 this.cboDestinationCalandarId.Items.Add(id.DsplayName);
             }
@@ -91,7 +91,7 @@ namespace SyncMyCal
             NewSetting.Source = source;
 
             cboSourceCalendarId.Items.Clear();
-            if (source == null || source.getCalendars() == null)
+            if (source == null || source.GetCalendars() == null)
             {
                 MessageBox.Show(this, "There was an error while connecting to the calendar: Please make sure " + Environment.NewLine + 
                                         "  you enter correct data while logging in" + Environment.NewLine + 
@@ -100,7 +100,7 @@ namespace SyncMyCal
                     "Could not connect to calendar", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            foreach (CalendarId cal in source.getCalendars())
+            foreach (CalendarId cal in source.GetCalendars())
             {
                 cboSourceCalendarId.Items.Add(cal.DsplayName);
             }
@@ -126,7 +126,7 @@ namespace SyncMyCal
             NewSetting.Destination = destination;
 
             cboDestinationCalandarId.Items.Clear();
-            foreach (CalendarId cal in destination.getCalendars())
+            foreach (CalendarId cal in destination.GetCalendars())
             {
                 cboDestinationCalandarId.Items.Add(cal.DsplayName);
             }
@@ -134,7 +134,7 @@ namespace SyncMyCal
 
         private void cboSourceCalendarId_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (CalendarId id in NewSetting.Source.getCalendars())
+            foreach (CalendarId id in NewSetting.Source.GetCalendars())
             {
                 if (id.DsplayName.Equals(cboSourceCalendarId.Text))
                 {
@@ -146,7 +146,7 @@ namespace SyncMyCal
 
         private void cboDestinationCalandarId_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (CalendarId id in NewSetting.Destination.getCalendars())
+            foreach (CalendarId id in NewSetting.Destination.GetCalendars())
             {
                 if (id.DsplayName.Equals(cboDestinationCalandarId.Text))
                 {

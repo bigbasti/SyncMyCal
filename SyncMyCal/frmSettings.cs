@@ -31,7 +31,7 @@ namespace SyncMyCal
             this.chkAlertAfterSync.Checked = Settings.Default.ShowAlertfAfterSync;
             this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - (this.Width + 10), Screen.PrimaryScreen.WorkingArea.Height - (this.Height + 10));
 
-            foreach (SyncSetting setting in syncManager.calendarsToSync)
+            foreach (SyncSetting setting in syncManager._calendarsToSync)
             {
                 lstSyncSettings.Items.Add(setting.ToString());
                 nextSync = DateTime.Now.AddMinutes(setting.MinutesBetweenSync);
@@ -58,12 +58,12 @@ namespace SyncMyCal
 
         private void jetztSynchronisierenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            syncManager.syncAllCalendars();
+            syncManager.SyncAllCalendars();
         }
 
         private void frmSettings_Shown(object sender, EventArgs e)
         {
-            if (syncManager.calendarsToSync.Count > 0)
+            if (syncManager._calendarsToSync.Count > 0)
             {
                 this.Hide();
             }
@@ -80,9 +80,9 @@ namespace SyncMyCal
                 //add only when the user clicked OK
                 if (newSetup.NewSetting.ToString() != null)
                 {
-                    syncManager.calendarsToSync.Add(newSetup.NewSetting);
+                    syncManager._calendarsToSync.Add(newSetup.NewSetting);
                     lstSyncSettings.Items.Add(newSetup.NewSetting.ToString());
-                    syncManager.saveSyncSettings();
+                    syncManager.SaveSyncSettings();
                     RefreshTimers();
                 }
             }
@@ -99,11 +99,11 @@ namespace SyncMyCal
                 SyncSetting settingToChange = new SyncSetting();
                 int managerIndex = 0;
 
-                for (var index = 0; index < syncManager.calendarsToSync.Count; index++)
+                for (var index = 0; index < syncManager._calendarsToSync.Count; index++)
                 {
-                    if (lstSyncSettings.Text.Equals(syncManager.calendarsToSync[index].ToString()))
+                    if (lstSyncSettings.Text.Equals(syncManager._calendarsToSync[index].ToString()))
                     {
-                        settingToChange = syncManager.calendarsToSync[index];
+                        settingToChange = syncManager._calendarsToSync[index];
                         managerIndex = index;
                         break;
                     }
@@ -115,9 +115,9 @@ namespace SyncMyCal
                 if (result == DialogResult.OK)
                 {
                     //add only when the user clicked OK
-                    syncManager.calendarsToSync[managerIndex] = newSetup.NewSetting;
+                    syncManager._calendarsToSync[managerIndex] = newSetup.NewSetting;
                     lstSyncSettings.Items[lstSyncSettings.SelectedIndex] = newSetup.NewSetting.ToString();
-                    syncManager.saveSyncSettings();
+                    syncManager.SaveSyncSettings();
                     RefreshTimers();
                 }
             }
@@ -127,13 +127,13 @@ namespace SyncMyCal
         private void cmdRemove_Click(object sender, EventArgs e)
         {
             if (lstSyncSettings.Text.Length <= 0) return;
-            for (var index = 0; index < syncManager.calendarsToSync.Count; index++)
+            for (var index = 0; index < syncManager._calendarsToSync.Count; index++)
             {
-                if (lstSyncSettings.Text.ToString().Equals(syncManager.calendarsToSync[index].ToString()))
+                if (lstSyncSettings.Text.ToString().Equals(syncManager._calendarsToSync[index].ToString()))
                 {
-                    syncManager.calendarsToSync.Remove(syncManager.calendarsToSync[index]);
+                    syncManager._calendarsToSync.Remove(syncManager._calendarsToSync[index]);
                     lstSyncSettings.Items.RemoveAt(lstSyncSettings.SelectedIndex);
-                    syncManager.saveSyncSettings();
+                    syncManager.SaveSyncSettings();
                     RefreshTimers();
                     break;
                 }
@@ -143,7 +143,7 @@ namespace SyncMyCal
         private void RefreshTimers()
         {
             syncTimer = new List<Timer>();
-            foreach (SyncSetting setting in syncManager.calendarsToSync)
+            foreach (SyncSetting setting in syncManager._calendarsToSync)
             {
                 Timer t = new Timer()
                 {
@@ -156,7 +156,7 @@ namespace SyncMyCal
                     string errorMessage = "krasser fehler!";
                     try
                     {
-                        success = syncManager.syncCalendar(setting);
+                        success = syncManager.SyncCalendar(setting);
                     }catch(Exception ex){
                         errorMessage = ex.Message;
                     }

@@ -14,37 +14,37 @@ namespace SyncMyCal.Sync
     /// </summary>
     public class SyncManager
     {
-        public List<SyncSetting> calendarsToSync;
+        public List<SyncSetting> _calendarsToSync;
 
         public SyncManager()
         {
-            calendarsToSync = loadSyncSettings();
+            _calendarsToSync = LoadSyncSettings();
         }
 
-        public void syncAllCalendars()
+        public void SyncAllCalendars()
         {
-            foreach (SyncSetting syncSetting in calendarsToSync)
+            foreach (SyncSetting syncSetting in _calendarsToSync)
             {
-                syncCalendar(syncSetting);
+                SyncCalendar(syncSetting);
             }
         }
 
-        public bool syncCalendar(SyncSetting syncSetting)
+        public bool SyncCalendar(SyncSetting syncSetting)
         {
-            syncSetting.Source.setActiveCalendar(syncSetting.SourceCalendar);
-            syncSetting.Destination.setActiveCalendar(syncSetting.DestinationCalendar);
+            syncSetting.Source.SetActiveCalendar(syncSetting.SourceCalendar);
+            syncSetting.Destination.SetActiveCalendar(syncSetting.DestinationCalendar);
 
             return new Sync()
-                        .from(syncSetting.Source)
-                        .to(syncSetting.Destination)
-                        .inTimeRangeFrom(DateTime.Now.AddDays(-syncSetting.DaysIntoPast))
-                        .to(DateTime.Now.AddDays(syncSetting.DaysIntoFuture))
-                        .beginSync();
+                        .From(syncSetting.Source)
+                        .To(syncSetting.Destination)
+                        .InTimeRangeFrom(DateTime.Now.AddDays(-syncSetting.DaysIntoPast))
+                        .To(DateTime.Now.AddDays(syncSetting.DaysIntoFuture))
+                        .BeginSync();
         }
 
-        public void saveSyncSettings()
+        public void SaveSyncSettings()
         {
-            var itemsSerialized = JsonConvert.SerializeObject(calendarsToSync, Formatting.None, new JsonSerializerSettings
+            var itemsSerialized = JsonConvert.SerializeObject(_calendarsToSync, Formatting.None, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Objects,
                 TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
@@ -54,7 +54,7 @@ namespace SyncMyCal.Sync
             Settings.Default.Save();
         }
 
-        public List<SyncSetting> loadSyncSettings()
+        public List<SyncSetting> LoadSyncSettings()
         {
             try
             {

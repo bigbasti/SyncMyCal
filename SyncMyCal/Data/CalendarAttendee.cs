@@ -20,31 +20,31 @@ namespace SyncMyCal.Data
         public CalendarAttendee(Recipient outlookAttendee)
         {
             PropertyAccessor pa = outlookAttendee.PropertyAccessor;
-            this.Id = outlookAttendee.EntryID;
-            this.Name = outlookAttendee.Name;
-            this.Email = pa.GetProperty("http://schemas.microsoft.com/mapi/proptag/0x39FE001E"); //Klingt komisch, ist aber so :/
+            Id = outlookAttendee.EntryID;
+            Name = outlookAttendee.Name;
+            Email = pa.GetProperty("http://schemas.microsoft.com/mapi/proptag/0x39FE001E"); //Klingt komisch, ist aber so :/
             //TODO: Alle Response-Stati abbilden
             //Da der Google-Response-Status besser lesbar ist, diesen per default speichern
-            this.Status = (outlookAttendee.MeetingResponseStatus == OlResponseStatus.olResponseAccepted) ? "accepted" : (outlookAttendee.MeetingResponseStatus == OlResponseStatus.olResponseDeclined) ? "declined" : "needsAction";
+            Status = (outlookAttendee.MeetingResponseStatus == OlResponseStatus.olResponseAccepted) ? "accepted" : (outlookAttendee.MeetingResponseStatus == OlResponseStatus.olResponseDeclined) ? "declined" : "needsAction";
         }
 
         public CalendarAttendee(EventAttendee googleAttendee)
         {
-            this.Id = googleAttendee.Id;
-            this.Name = googleAttendee.DisplayName;
-            this.Email = googleAttendee.Email;
+            Id = googleAttendee.Id;
+            Name = googleAttendee.DisplayName;
+            Email = googleAttendee.Email;
             //TODO: Alle Response-Stati abbilden
             //Da der Google-Response-Status besser lesbar ist, diesen per default speichern
-            this.Status = googleAttendee.ResponseStatus;
+            Status = googleAttendee.ResponseStatus;
         }
 
-        public EventAttendee toGoogleAttendee()
+        public EventAttendee ToGoogleAttendee()
         {
             return new EventAttendee()
             {
-                DisplayName = this.Name,
-                Email = this.Email,
-                ResponseStatus = this.Status
+                DisplayName = Name,
+                Email = Email,
+                ResponseStatus = Status
             };
         }
     }

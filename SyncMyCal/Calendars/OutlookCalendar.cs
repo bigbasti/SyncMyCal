@@ -14,15 +14,15 @@ namespace SyncMyCal.Calendars
 
         public OutlookCalendar()
         {
-            connectCalendar();
+            ConnectCalendar();
         }
 
-        public string getProviderName()
+        public string GetProviderName()
         {
             return "Outlook";
         }
 
-        public bool connectCalendar()
+        public bool ConnectCalendar()
         {
             try
             {
@@ -44,7 +44,7 @@ namespace SyncMyCal.Calendars
             return true;
         }
 
-        public List<CalendarId> getCalendars()
+        public List<CalendarId> GetCalendars()
         {
             if (calendarConnection != null)
             {
@@ -66,12 +66,12 @@ namespace SyncMyCal.Calendars
             }
         }
 
-        public void setActiveCalendar(CalendarId calendar)
+        public void SetActiveCalendar(CalendarId calendar)
         {
             //TODO: braucht man hier wahrscheinlich nicht -> do nothing
         }
 
-        public List<CalendarEntry> getCalendarEntriesInRange(DateTime from, DateTime to)
+        public List<CalendarEntry> GetCalendarEntriesInRange(DateTime from, DateTime to)
         {
             var result = new List<CalendarEntry>();
 
@@ -94,12 +94,12 @@ namespace SyncMyCal.Calendars
             return result;
         }
 
-        public bool addNewCalendarEntry(CalendarEntry newEntry)
+        public bool AddNewCalendarEntry(CalendarEntry newEntry)
         {
             throw new NotImplementedException();
         }
 
-        public bool deleteCalendarEntry(CalendarEntry entry)
+        public bool DeleteCalendarEntry(CalendarEntry entry)
         {
             throw new NotImplementedException();
         }
