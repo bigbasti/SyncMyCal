@@ -37,6 +37,7 @@ namespace SyncMyCal.Data
         /// <param name="googleCalendarEvent"></param>
         public CalendarEntry(Event googleCalendarEvent)
         {
+            Console.WriteLine("Creating CalendarEvent for " + googleCalendarEvent.Summary);
             Id = googleCalendarEvent.Id;
 
             if (googleCalendarEvent.Start.Date != null && googleCalendarEvent.End.Date != null)
@@ -63,10 +64,14 @@ namespace SyncMyCal.Data
             RemainterMinutesBefore = googleCalendarEvent.Reminders.Overrides[0].Minutes.Value;
 
             Attendees = new List<CalendarAttendee>();
-            foreach (EventAttendee a in googleCalendarEvent.Attendees)
+            if(googleCalendarEvent.Attendees != null)
             {
-                Attendees.Add(new CalendarAttendee(a));
+                foreach (EventAttendee a in googleCalendarEvent.Attendees)
+                {
+                    Attendees.Add(new CalendarAttendee(a));
+                }
             }
+            
         }
 
         /// <summary>
@@ -104,9 +109,12 @@ namespace SyncMyCal.Data
 
                 //Teilnehmer
                 Attendees = new List<CalendarAttendee>();
-                foreach (Recipient r in outlookCalendarEvent.Recipients)
+                if (outlookCalendarEvent.Recipients != null)
                 {
-                    Attendees.Add(new CalendarAttendee(r));
+                    foreach (Recipient r in outlookCalendarEvent.Recipients)
+                    {
+                        Attendees.Add(new CalendarAttendee(r));
+                    }
                 }
             }
             catch (System.Exception ex)
