@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SyncMyCal.Calendars
 {
@@ -57,6 +58,7 @@ namespace SyncMyCal.Calendars
             {
                 //TODO: Exceptions aufschlüsseln
                 Console.WriteLine(ex.Message);
+                MessageBox.Show(new FrmSettings(), "Error while Connecting to the selected Provider:\n" + ex.Message + "\n" + ex.InnerException?.Message, "Could not Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -74,19 +76,29 @@ namespace SyncMyCal.Calendars
                 return availableCalendars;
             }
 
-            var calendars = calendarConnection.CalendarList.List().Execute().Items;
-
-            foreach (CalendarListEntry entry in calendars)
+            try
             {
-                availableCalendars.Add(new CalendarId()
+                var calendars = calendarConnection.CalendarList.List().Execute().Items;
+
+                foreach (CalendarListEntry entry in calendars)
                 {
-                    Provider = "google",
-                    DsplayName = entry.Summary,
-                    InternalId = entry.Id,
-                    Description = entry.Description
-                });
+                    availableCalendars.Add(new CalendarId()
+                    {
+                        Provider = "google",
+                        DsplayName = entry.Summary,
+                        InternalId = entry.Id,
+                        Description = entry.Description
+                    });
+                }
+                return availableCalendars;
             }
-            return availableCalendars;
+            catch (Exception ex)
+            {
+                //TODO: Exceptions aufschlüsseln
+                Console.WriteLine(ex.Message);
+                MessageBox.Show(new FrmSettings(), "Error while reading Calendar entries from the selected Provider:\n" + ex.Message + "\n" + ex.InnerException?.Message, "Could not Read", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return availableCalendars;
+            }
         }
 
         public void SetActiveCalendar(CalendarId calendar)
